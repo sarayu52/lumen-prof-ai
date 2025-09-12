@@ -1,293 +1,342 @@
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { AIProfessor3D } from "@/components/AIProfessor3D";
-import { CourseGenerator, type Course } from "@/components/CourseGenerator";
-import { CourseOverview } from "@/components/CourseOverview";
-import { ProgressTracker } from "@/components/ProgressTracker";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { toast } from "sonner";
-import {
-  Brain,
-  BookOpen,
+import { FloatingObjects3D } from "@/components/FloatingObjects3D";
+import { NavLink } from "react-router-dom";
+import { 
+  Calendar, 
+  Trophy, 
+  Users, 
   TrendingUp,
-  MessageSquare,
-  Sparkles,
-  Rocket,
-  GraduationCap,
+  Clock,
+  MapPin,
+  Award,
+  Target,
+  CheckCircle,
+  Star,
   Zap
 } from "lucide-react";
 
+const upcomingEvents = [
+  {
+    id: 1,
+    title: "HackTech 2024",
+    date: "Dec 15-17, 2024",
+    timeLeft: "5 days",
+    status: "Registered",
+    progress: 75
+  },
+  {
+    id: 2,
+    title: "AI Innovation Challenge", 
+    date: "Feb 5-7, 2025",
+    timeLeft: "45 days",
+    status: "Open",
+    progress: 0
+  }
+];
+
+const achievements = [
+  {
+    id: 1,
+    title: "Event Champion",
+    description: "Won 1st place in a hackathon",
+    icon: "🏆",
+    unlockedAt: "2 days ago"
+  },
+  {
+    id: 2,
+    title: "Network Builder",
+    description: "Connected with 50+ participants",
+    icon: "🤝",
+    unlockedAt: "1 week ago"
+  }
+];
+
+const stats = [
+  { label: "Events Joined", value: "12", icon: Calendar },
+  { label: "Competitions Won", value: "3", icon: Trophy },
+  { label: "Network Size", value: "156", icon: Users },
+  { label: "Skill Rating", value: "95%", icon: TrendingUp }
+];
+
 export default function Dashboard() {
-  const [generatedCourse, setGeneratedCourse] = useState<Course | null>(null);
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [professorActive, setProfessorActive] = useState(true);
-  const [professorSpeaking, setProfessorSpeaking] = useState(false);
-  const [micEnabled, setMicEnabled] = useState(true);
-  const [soundEnabled, setSoundEnabled] = useState(true);
-
-  // Mock progress data
-  const progressData = {
-    overallProgress: 67,
-    completedModules: 3,
-    totalModules: 4,
-    skillsMastered: ["JavaScript", "React", "CSS3", "HTML5"],
-    weeklyGoal: 10,
-    weeklyProgress: 7.5,
-    streak: 12,
-    timeSpent: "32h",
-    achievements: [
-      {
-        id: "1",
-        title: "First Steps",
-        description: "Completed your first module",
-        icon: "🎯",
-        unlockedAt: "2 days ago"
-      },
-      {
-        id: "2",
-        title: "Streak Master",
-        description: "10 day learning streak",
-        icon: "🔥",
-        unlockedAt: "1 day ago"
-      },
-      {
-        id: "3",
-        title: "Code Ninja",
-        description: "Built your first project",
-        icon: "👨‍💻",
-        unlockedAt: "Today"
-      }
-    ],
-    recentActivity: [
-      {
-        id: "1",
-        type: "module",
-        title: "Completed React Fundamentals",
-        timestamp: "2 hours ago",
-        progress: 100
-      },
-      {
-        id: "2",
-        type: "assessment",
-        title: "Passed JavaScript Quiz",
-        timestamp: "1 day ago",
-        progress: 85
-      },
-      {
-        id: "3",
-        type: "project",
-        title: "Started Portfolio Project",
-        timestamp: "2 days ago",
-        progress: 30
-      }
-    ]
-  };
-
-  const handleCourseGenerated = async (course: Course) => {
-    setIsGenerating(true);
-    // Simulate AI processing time
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    setGeneratedCourse(course);
-    setIsGenerating(false);
-    setProfessorSpeaking(true);
-    setTimeout(() => setProfessorSpeaking(false), 3000);
-  };
-
-  const handleStartCourse = () => {
-    toast.success("Course started! Ready to learn?");
-    setProfessorSpeaking(true);
-    setTimeout(() => setProfessorSpeaking(false), 2000);
-  };
-
-  const handleAskProfessor = () => {
-    toast.info("AI Professor is ready to help!");
-    setProfessorSpeaking(true);
-    setTimeout(() => setProfessorSpeaking(false), 2500);
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-hero">
-      <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-gradient-hero relative overflow-hidden">
+      {/* 3D Floating Objects Background */}
+      <div className="absolute inset-0 pointer-events-none">
+        <FloatingObjects3D />
+      </div>
+
+      <div className="container mx-auto px-4 py-8 relative z-10">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-8"
+          className="mb-8"
         >
           <h1 className="text-4xl md:text-6xl font-bold gradient-text mb-4">
-            AI-Powered EdTech Platform
+            Welcome Back, Alex! 👋
           </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Transform your learning journey with personalized AI courses and a 3D AI professor
+          <p className="text-lg text-muted-foreground">
+            Ready to participate in your next amazing event?
           </p>
-          <div className="flex justify-center space-x-4 mt-6">
-            <Badge variant="secondary" className="bg-primary/20 text-primary">
-              <Brain className="h-3 w-3 mr-1" />
-              AI-Powered
-            </Badge>
-            <Badge variant="secondary" className="bg-success/20 text-success">
-              <Sparkles className="h-3 w-3 mr-1" />
-              Interactive 3D
-            </Badge>
-            <Badge variant="secondary" className="bg-accent/20 text-accent">
-              <Rocket className="h-3 w-3 mr-1" />
-              Project-Based
-            </Badge>
-          </div>
         </motion.div>
 
-        <Tabs defaultValue="generator" className="space-y-8">
-          <TabsList className="grid w-full grid-cols-3 lg:w-[400px] mx-auto bg-card/50 backdrop-blur-sm">
-            <TabsTrigger value="generator" className="flex items-center space-x-2">
-              <Zap className="h-4 w-4" />
-              <span>Generate</span>
-            </TabsTrigger>
-            <TabsTrigger value="course" className="flex items-center space-x-2">
-              <BookOpen className="h-4 w-4" />
-              <span>Course</span>
-            </TabsTrigger>
-            <TabsTrigger value="progress" className="flex items-center space-x-2">
-              <TrendingUp className="h-4 w-4" />
-              <span>Progress</span>
-            </TabsTrigger>
-          </TabsList>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Left Column - Main Content */}
-            <div className="space-y-6">
-              <TabsContent value="generator" className="mt-0">
-                <CourseGenerator 
-                  onCourseGenerated={handleCourseGenerated}
-                  isGenerating={isGenerating}
-                />
-              </TabsContent>
-
-              <TabsContent value="course" className="mt-0">
-                {generatedCourse ? (
-                  <CourseOverview 
-                    course={generatedCourse}
-                    progress={progressData.overallProgress}
-                    onStartCourse={handleStartCourse}
-                    onAskProfessor={handleAskProfessor}
-                  />
-                ) : (
-                  <Card className="glass-card border-primary/20">
-                    <CardContent className="flex flex-col items-center justify-center py-16 space-y-4">
-                      <GraduationCap className="h-16 w-16 text-muted-foreground" />
-                      <h3 className="text-xl font-semibold text-muted-foreground">No Course Generated</h3>
-                      <p className="text-center text-muted-foreground">
-                        Generate your first AI-powered course to get started with your learning journey
-                      </p>
-                      <Button
-                        variant="hero"
-                        onClick={() => {
-                          const generatorTab = document.querySelector('[data-state="inactive"][value="generator"]') as HTMLElement;
-                          if (generatorTab) generatorTab.click();
-                        }}
-                      >
-                        <Zap className="h-4 w-4 mr-2" />
-                        Generate Course
-                      </Button>
-                    </CardContent>
-                  </Card>
-                )}
-              </TabsContent>
-
-              <TabsContent value="progress" className="mt-0">
-                <ProgressTracker data={progressData} />
-              </TabsContent>
-            </div>
-
-            {/* Right Column - AI Professor */}
-            <div className="space-y-6">
-              <AIProfessor3D
-                isActive={professorActive}
-                isSpeaking={professorSpeaking}
-                onToggleMic={() => setMicEnabled(!micEnabled)}
-                onToggleSound={() => setSoundEnabled(!soundEnabled)}
-                micEnabled={micEnabled}
-                soundEnabled={soundEnabled}
-              />
-
-              {/* Quick Actions */}
-              <Card className="glass-card border-primary/20">
-                <CardHeader>
-                  <CardTitle className="flex items-center space-x-2">
-                    <MessageSquare className="h-5 w-5 text-primary" />
-                    <span>Quick Actions</span>
-                  </CardTitle>
-                  <CardDescription>
-                    Interact with your AI Professor
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <Button 
-                    variant="glass" 
-                    className="w-full justify-start"
-                    onClick={handleAskProfessor}
-                  >
-                    <Brain className="h-4 w-4 mr-2" />
-                    Ask a Question
-                  </Button>
-                  <Button 
-                    variant="glass" 
-                    className="w-full justify-start"
-                    onClick={() => toast.info("Getting personalized recommendations...")}
-                  >
-                    <Sparkles className="h-4 w-4 mr-2" />
-                    Get Recommendations
-                  </Button>
-                  <Button 
-                    variant="glass" 
-                    className="w-full justify-start"
-                    onClick={() => toast.info("Reviewing your progress...")}
-                  >
-                    <TrendingUp className="h-4 w-4 mr-2" />
-                    Review Progress
-                  </Button>
-                  <Button 
-                    variant="glass" 
-                    className="w-full justify-start"
-                    onClick={() => toast.info("Starting practice session...")}
-                  >
-                    <Rocket className="h-4 w-4 mr-2" />
-                    Start Practice
-                  </Button>
+        {/* Stats Grid */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8"
+        >
+          {stats.map((stat, index) => (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: index * 0.1 + 0.3 }}
+            >
+              <Card className="glass-card border-primary/20 text-center hover:scale-105 transition-transform duration-300">
+                <CardContent className="p-4">
+                  <div className="flex items-center justify-center w-10 h-10 bg-primary/20 rounded-full mb-2 mx-auto">
+                    <stat.icon className="h-5 w-5 text-primary" />
+                  </div>
+                  <div className="text-xl font-bold text-foreground">{stat.value}</div>
+                  <div className="text-xs text-muted-foreground">{stat.label}</div>
                 </CardContent>
               </Card>
+            </motion.div>
+          ))}
+        </motion.div>
 
-              {/* Learning Stats */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Left Column */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* Upcoming Events */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.5 }}
+            >
               <Card className="glass-card border-primary/20">
                 <CardHeader>
-                  <CardTitle className="text-lg">Today's Learning</CardTitle>
+                  <CardTitle className="flex items-center">
+                    <Calendar className="h-5 w-5 mr-2 text-primary" />
+                    Upcoming Events
+                  </CardTitle>
+                  <CardDescription>Your registered and upcoming events</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">Time Spent</span>
-                    <span className="font-medium">2h 15m</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">Modules Completed</span>
-                    <span className="font-medium">1</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">Questions Asked</span>
-                    <span className="font-medium">7</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">Streak</span>
-                    <span className="font-medium flex items-center">
-                      🔥 {progressData.streak} days
+                  {upcomingEvents.map((event) => (
+                    <div
+                      key={event.id}
+                      className="flex items-center justify-between p-4 bg-card/50 rounded-lg backdrop-blur-sm hover:scale-105 transition-transform cursor-pointer"
+                    >
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <h3 className="font-semibold">{event.title}</h3>
+                          <Badge className={
+                            event.status === "Registered" 
+                              ? "bg-success/20 text-success" 
+                              : "bg-primary/20 text-primary"
+                          }>
+                            {event.status}
+                          </Badge>
+                        </div>
+                        <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                          <span className="flex items-center">
+                            <Calendar className="h-3 w-3 mr-1" />
+                            {event.date}
+                          </span>
+                          <span className="flex items-center">
+                            <Clock className="h-3 w-3 mr-1" />
+                            {event.timeLeft}
+                          </span>
+                        </div>
+                        {event.progress > 0 && (
+                          <div className="mt-2">
+                            <div className="flex items-center justify-between text-xs mb-1">
+                              <span>Preparation Progress</span>
+                              <span>{event.progress}%</span>
+                            </div>
+                            <div className="w-full bg-muted rounded-full h-1.5">
+                              <div 
+                                className="bg-primary h-1.5 rounded-full transition-all duration-300"
+                                style={{ width: `${event.progress}%` }}
+                              />
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                      <Button size="sm" variant="ghost">
+                        View Details
+                      </Button>
+                    </div>
+                  ))}
+                  
+                  <Button className="w-full glow-primary" variant="hero" asChild>
+                    <NavLink to="/events">
+                      <Zap className="h-4 w-4 mr-2" />
+                      Discover More Events
+                    </NavLink>
+                  </Button>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Recent Achievements */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.7 }}
+            >
+              <Card className="glass-card border-primary/20">
+                <CardHeader>
+                  <CardTitle className="flex items-center">
+                    <Award className="h-5 w-5 mr-2 text-yellow-500" />
+                    Recent Achievements
+                  </CardTitle>
+                  <CardDescription>Your latest accomplishments</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  {achievements.map((achievement) => (
+                    <div
+                      key={achievement.id}
+                      className="flex items-center p-3 bg-card/50 rounded-lg backdrop-blur-sm hover:scale-105 transition-transform cursor-pointer"
+                    >
+                      <div className="text-2xl mr-3">{achievement.icon}</div>
+                      <div className="flex-1">
+                        <div className="font-medium">{achievement.title}</div>
+                        <div className="text-sm text-muted-foreground">{achievement.description}</div>
+                      </div>
+                      <div className="text-xs text-muted-foreground">{achievement.unlockedAt}</div>
+                    </div>
+                  ))}
+                </CardContent>
+              </Card>
+            </motion.div>
+          </div>
+
+          {/* Right Column */}
+          <div className="space-y-6">
+            {/* Quick Actions */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.6 }}
+            >
+              <Card className="glass-card border-primary/20">
+                <CardHeader>
+                  <CardTitle className="flex items-center">
+                    <Target className="h-5 w-5 mr-2 text-primary" />
+                    Quick Actions
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <Button variant="glass" className="w-full justify-start" asChild>
+                    <NavLink to="/events">
+                      <Calendar className="h-4 w-4 mr-2" />
+                      Browse Events
+                    </NavLink>
+                  </Button>
+                  <Button variant="glass" className="w-full justify-start" asChild>
+                    <NavLink to="/registration">
+                      <Users className="h-4 w-4 mr-2" />
+                      Register for Event
+                    </NavLink>
+                  </Button>
+                  <Button variant="glass" className="w-full justify-start">
+                    <Trophy className="h-4 w-4 mr-2" />
+                    View Leaderboard
+                  </Button>
+                  <Button variant="glass" className="w-full justify-start">
+                    <Star className="h-4 w-4 mr-2" />
+                    Rate Past Events
+                  </Button>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Today's Schedule */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.8 }}
+            >
+              <Card className="glass-card border-primary/20">
+                <CardHeader>
+                  <CardTitle className="flex items-center">
+                    <Clock className="h-5 w-5 mr-2 text-accent" />
+                    Today's Schedule
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="flex items-center">
+                      <CheckCircle className="h-3 w-3 mr-2 text-success" />
+                      Team standup
                     </span>
+                    <span className="text-muted-foreground">10:00 AM</span>
+                  </div>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="flex items-center">
+                      <Clock className="h-3 w-3 mr-2 text-primary" />
+                      Coding session
+                    </span>
+                    <span className="text-muted-foreground">2:00 PM</span>
+                  </div>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="flex items-center">
+                      <Users className="h-3 w-3 mr-2 text-accent" />
+                      Team demo
+                    </span>
+                    <span className="text-muted-foreground">5:00 PM</span>
+                  </div>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="flex items-center">
+                      <Trophy className="h-3 w-3 mr-2 text-yellow-500" />
+                      Results announcement
+                    </span>
+                    <span className="text-muted-foreground">8:00 PM</span>
                   </div>
                 </CardContent>
               </Card>
-            </div>
+            </motion.div>
+
+            {/* Network Stats */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 1.0 }}
+            >
+              <Card className="glass-card border-primary/20 bg-gradient-to-r from-accent/10 to-accent/5">
+                <CardHeader>
+                  <CardTitle className="text-lg">Network Impact</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm">Connections Made</span>
+                    <span className="font-bold">156</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm">Messages Sent</span>
+                    <span className="font-bold">342</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm">Profile Views</span>
+                    <span className="font-bold">89</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm">Mentor Sessions</span>
+                    <span className="font-bold">7</span>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
           </div>
-        </Tabs>
+        </div>
       </div>
     </div>
   );
