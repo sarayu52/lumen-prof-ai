@@ -2,64 +2,73 @@
 @tailwind components;
 @tailwind utilities;
 
-/* AI EdTech Platform Design System - Futuristic Space-Tech Aesthetic
-All colors MUST be HSL.
+/* Futuristic Neon Event Platform - Black-Blue Holographic Theme
+All colors MUST be HSL for perfect neon effects.
 */
 
 @layer base {
   :root {
-    /* Core Background System */
-    --background: 230 35% 7%;
-    --foreground: 210 40% 98%;
+    /* Core Black Background System */
+    --background: 220 100% 2%;
+    --foreground: 200 100% 95%;
 
-    /* Card System */
-    --card: 230 35% 9%;
-    --card-foreground: 210 40% 98%;
+    /* Holographic Card System */
+    --card: 220 50% 4%;
+    --card-foreground: 200 100% 95%;
     
     /* Interactive Elements */
-    --popover: 230 35% 9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 220 50% 4%;
+    --popover-foreground: 200 100% 95%;
 
-    /* AI Tech Primary Colors */
-    --primary: 193 100% 50%;
-    --primary-foreground: 230 35% 7%;
-    --primary-glow: 193 100% 70%;
+    /* Neon Blue Primary */
+    --primary: 200 100% 60%;
+    --primary-foreground: 220 100% 2%;
+    --primary-glow: 200 100% 80%;
     
-    /* Secondary Tech Colors */
-    --secondary: 230 25% 15%;
-    --secondary-foreground: 210 40% 98%;
+    /* Electric Blue Secondary */
+    --secondary: 220 80% 8%;
+    --secondary-foreground: 200 100% 95%;
     
-    /* Muted Elements */
-    --muted: 230 25% 12%;
-    --muted-foreground: 217 15% 65%;
+    /* Muted Dark Elements */
+    --muted: 220 60% 6%;
+    --muted-foreground: 200 50% 70%;
 
-    /* Accent System */
-    --accent: 270 100% 60%;
-    --accent-foreground: 210 40% 98%;
-    --accent-glow: 270 100% 80%;
+    /* Neon Purple Accent */
+    --accent: 280 100% 70%;
+    --accent-foreground: 220 100% 2%;
+    --accent-glow: 280 100% 85%;
 
-    /* Status Colors */
-    --success: 142 100% 50%;
-    --success-glow: 142 100% 70%;
-    --warning: 38 100% 60%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
+    /* Neon Status Colors */
+    --success: 120 100% 60%;
+    --success-glow: 120 100% 75%;
+    --warning: 50 100% 65%;
+    --destructive: 0 100% 65%;
+    --destructive-foreground: 220 100% 2%;
 
-    /* UI Elements */
-    --border: 230 25% 18%;
-    --input: 230 25% 15%;
-    --ring: 193 100% 50%;
+    /* Holographic UI Elements */
+    --border: 200 80% 15%;
+    --input: 220 70% 5%;
+    --ring: 200 100% 60%;
 
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
-    --gradient-secondary: linear-gradient(135deg, hsl(var(--secondary)), hsl(var(--muted)));
-    --gradient-hero: linear-gradient(135deg, hsl(230 35% 7%), hsl(230 25% 15%), hsl(193 100% 10%));
-    --gradient-card: linear-gradient(145deg, hsl(var(--card)), hsl(230 25% 12%));
+    /* Neon Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(200 100% 60%), hsl(280 100% 70%));
+    --gradient-secondary: linear-gradient(135deg, hsl(220 80% 8%), hsl(220 60% 6%));
+    --gradient-hero: linear-gradient(135deg, hsl(220 100% 2%), hsl(220 80% 8%), hsl(200 100% 10%));
+    --gradient-card: linear-gradient(145deg, hsl(220 50% 4%), hsl(220 60% 6%));
+    --gradient-holographic: linear-gradient(45deg, hsl(200 100% 60%), hsl(280 100% 70%), hsl(120 100% 60%));
+    --gradient-neon: linear-gradient(90deg, hsl(200 100% 60%), hsl(280 100% 70%));
     
-    /* Glows and Effects */
-    --glow-primary: 0 0 20px hsl(var(--primary) / 0.3);
-    --glow-accent: 0 0 20px hsl(var(--accent) / 0.3);
-    --glow-success: 0 0 20px hsl(var(--success) / 0.3);
+    /* Neon Glows and Effects */
+    --glow-primary: 0 0 30px hsl(200 100% 60% / 0.5), 0 0 60px hsl(200 100% 60% / 0.3);
+    --glow-accent: 0 0 30px hsl(280 100% 70% / 0.5), 0 0 60px hsl(280 100% 70% / 0.3);
+    --glow-success: 0 0 30px hsl(120 100% 60% / 0.5), 0 0 60px hsl(120 100% 60% / 0.3);
+    --glow-holographic: 0 0 50px hsl(200 100% 60% / 0.4), 0 0 100px hsl(280 100% 70% / 0.3);
+    
+    /* Party Effects */
+    --sparkle-1: hsl(200 100% 80%);
+    --sparkle-2: hsl(280 100% 85%);
+    --sparkle-3: hsl(120 100% 75%);
+    --sparkle-4: hsl(50 100% 75%);
     
     /* Transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -145,7 +154,7 @@ All colors MUST be HSL.
     background: hsl(var(--primary-glow));
   }
 
-  /* Utility classes */
+  /* Futuristic Neon Utility Classes */
   .glow-primary {
     box-shadow: var(--glow-primary);
   }
@@ -158,17 +167,34 @@ All colors MUST be HSL.
     box-shadow: var(--glow-success);
   }
 
+  .glow-holographic {
+    box-shadow: var(--glow-holographic);
+  }
+
   .gradient-text {
-    background: var(--gradient-primary);
+    background: var(--gradient-holographic);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  .glass-card {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+  .gradient-neon-text {
+    background: var(--gradient-neon);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .holographic-card {
+    background: linear-gradient(145deg, rgba(200, 255, 255, 0.03), rgba(255, 200, 255, 0.03));
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(200, 255, 255, 0.2);
+    border-image: linear-gradient(45deg, transparent, hsl(var(--primary) / 0.5), transparent) 1;
+  }
+
+  .neon-border {
+    border: 1px solid hsl(var(--primary));
+    box-shadow: inset 0 0 20px hsl(var(--primary) / 0.2), 0 0 20px hsl(var(--primary) / 0.3);
   }
 
   .animate-float {
@@ -179,13 +205,70 @@ All colors MUST be HSL.
     animation: pulse-glow 2s ease-in-out infinite;
   }
 
+  .animate-rotate {
+    animation: rotate 8s linear infinite;
+  }
+
+  .animate-sparkle {
+    animation: sparkle 2s ease-in-out infinite;
+  }
+
+  .animate-hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .animate-hover-lift:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: var(--glow-holographic);
+  }
+
   @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    33% { transform: translateY(-15px) rotate(120deg); }
+    66% { transform: translateY(-8px) rotate(240deg); }
   }
 
   @keyframes pulse-glow {
-    0%, 100% { box-shadow: 0 0 20px hsl(var(--primary) / 0.3); }
-    50% { box-shadow: 0 0 40px hsl(var(--primary) / 0.6); }
+    0%, 100% { 
+      box-shadow: var(--glow-primary);
+      border-color: hsl(var(--primary) / 0.5);
+    }
+    50% { 
+      box-shadow: var(--glow-holographic);
+      border-color: hsl(var(--accent) / 0.8);
+    }
+  }
+
+  @keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  @keyframes sparkle {
+    0%, 100% { 
+      opacity: 0.7;
+      transform: scale(1);
+    }
+    50% { 
+      opacity: 1;
+      transform: scale(1.2);
+    }
+  }
+
+  @keyframes holographic-shift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .holographic-bg {
+    background: linear-gradient(-45deg, 
+      hsl(200 100% 60% / 0.1), 
+      hsl(280 100% 70% / 0.1), 
+      hsl(120 100% 60% / 0.1), 
+      hsl(50 100% 75% / 0.1)
+    );
+    background-size: 400% 400%;
+    animation: holographic-shift 8s ease infinite;
   }
 }

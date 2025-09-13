@@ -8,6 +8,13 @@ import Index from "./pages/Index";
 import Events from "./pages/Events";
 import Registration from "./pages/Registration";
 import Sponsors from "./pages/Sponsors";
+import Rewards from "./pages/Rewards";
+import Analytics from "./pages/Analytics";
+import LiveStreaming from "./pages/LiveStreaming";
+import AIMatching from "./pages/AIMatching";
+import Tickets from "./pages/Tickets";
+import Feedback from "./pages/Feedback";
+import Sustainability from "./pages/Sustainability";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,6 +31,13 @@ const App = () => (
           <Route path="/events" element={<Events />} />
           <Route path="/registration" element={<Registration />} />
           <Route path="/sponsors" element={<Sponsors />} />
+          <Route path="/rewards" element={<Rewards />} />
+          <Route path="/analytics" element={<Analytics />} />
+          <Route path="/streaming" element={<LiveStreaming />} />
+          <Route path="/ai-matching" element={<AIMatching />} />
+          <Route path="/tickets" element={<Tickets />} />
+          <Route path="/feedback" element={<Feedback />} />
+          <Route path="/sustainability" element={<Sustainability />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
